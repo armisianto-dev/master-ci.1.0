@@ -45,9 +45,15 @@
 							<a href="#">
 								<i class="fa fa-home"></i> <span class="menu-title">Dashboard</span>
 							</a>
-						</li><li class="active-link">
+						</li>
+						<li class="active-link">
 							<a href="<?=site_url()?>features/pusher_notification">
 								<i class="fa fa-bell"></i> <span class="menu-title">Pusher Notification</span>
+							</a>
+						</li>
+						<li class="active-link">
+							<a href="<?=site_url()?>features/socketio_notification">
+								<i class="fa fa-bell"></i> <span class="menu-title">Socket.io Notification</span>
 							</a>
 						</li>
 						<li class="">
