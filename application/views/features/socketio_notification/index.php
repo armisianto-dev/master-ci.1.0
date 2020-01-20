@@ -96,7 +96,7 @@
 		})
 
 		var socket = io.connect('http://localhost:3000');
-
+		
 		// on Load 
 		socket.emit('notification load', {client_id : '<?= $selected_user; ?>'});
 
@@ -119,13 +119,30 @@
 
 			var html = '';	
 				listNotifikasi.forEach(function(data){
-					html += `<a href="#" class="list-group-item">
+					html += `<a href="javascript:void(0)" class="list-group-item link-notifikasi" data-notification-id="`+data.notification_id+`" data-client-id="`+data.client_id+`" data-link="`+data.link+`">
 					            <h4 class="list-group-item-heading">`+data.title+`</h4>
 					            <p class="list-group-item-text">`+data.message+`</p>
 					        </a>`;
 				})
 			    
 			$('#list-notification').html(html);
+
+			// Baca Notifikasi
+			$('a.link-notifikasi').on('click', function(){
+				var $this = $(this);
+				var link = $this.data('link');
+
+				var data = {
+					notification_id: $this.data('notification-id'),
+					client_id: $this.data('client-id'),
+				}
+
+				if(link){
+					window.location = link;
+				}
+
+				socket.emit('notification read', data);
+			});
 		});
 
 	});
