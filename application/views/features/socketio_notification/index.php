@@ -48,8 +48,11 @@
 									<option value="USERDUMMY3">User 3</option>
 								</select>
 					        </div>
-					        <div class="col-md-6 mar-btm">
+					        <!-- <div class="col-md-6 mar-btm">
 					            <input type="text" name="group_id" class="form-control" placeholder="Group ID">
+					        </div> -->
+					        <div class="com-md-12 mar-btm">
+					        	<input type="text" class="form-control" name="link" placeholder="Link">
 					        </div>
 					    </div>
 					</div>
@@ -96,23 +99,15 @@
 		})
 
 		var socket = io.connect('http://localhost:3000');
-		
+		socket.on('connect', function(){
+			socket.emit('join', '<?= $selected_user; ?>');
+		});
+
 		// on Load 
 		socket.emit('notification load', {client_id : '<?= $selected_user; ?>'});
 
-		$('#sendNotification').on('click', function(){
-			var $this = $(this);
-			var data = {
-					title : $('input[name="title"]').val(),
-					message : $('textarea[name="message"]').val(),
-					client_id : $('select[name="client_id"]').val(),
-					group_id : $('input[name="group_id"]').val(),
-				}
-			socket.emit('notification added', data);
-		})
-
 		// Terima Notifikasi
-		socket.on('<?= $selected_user ?>', function(result){
+		socket.on('new notification', function(result){
 			var totalNotifikasi = result.totalNotification,
 				listNotifikasi = result.listNotification;
 
@@ -137,13 +132,26 @@
 					client_id: $this.data('client-id'),
 				}
 
+				socket.emit('notification read', data);
+
 				if(link){
 					window.location = link;
 				}
-
-				socket.emit('notification read', data);
+				
 			});
 		});
+
+		$('#sendNotification').on('click', function(){
+			var $this = $(this);
+			var data = {
+					title : $('input[name="title"]').val(),
+					message : $('textarea[name="message"]').val(),
+					client_id : $('select[name="client_id"]').val(),
+					link : $('input[name="link"]').val(),
+				}
+			socket.emit('notification added', data);
+		});
+		
 
 	});
 </script>
