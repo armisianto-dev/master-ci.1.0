@@ -1,22 +1,3 @@
-<script>
-
-    // Enable pusher logging - don't include this in production
-  //   Pusher.logToConsole = true;
-
-  //   var pusher = new Pusher('24a1a5298f0c9aa416d8', {
-  //     cluster: 'ap1',
-  //     forceTLS: true
-  //   });
-
-  //   var channel = pusher.subscribe('notification');
-  //   channel.bind('push-notification', function(data) {
-  //     var html = `<a href="#" class="list-group-item">
-		// 			            <h4 class="list-group-item-heading">`+data.title+`</h4>
-		// 			            <p class="list-group-item-text">`+data.message+`</p>
-		// 			        </a>`;
-		// $('#list-notification').append(html);
-  //   });
-  </script>
 
 <div id="page-title">
 	<h1 class="page-header text-overflow">Socket.io Notification</h1>
@@ -62,32 +43,6 @@
 				</form>
 			</div>
 		</div>
-		<div class="col-md-6">
-			<div class="panel panel-mint">
-				<div class="panel-heading">
-					<h3 class="panel-title">Terima Notifikasi</h3>
-				</div>
-				<div class="panel-body">
-						<div class="pad-btm form-inline">
-							<div class="row">
-								<div class="col-md-6">
-									
-								</div>
-								<div class="col-md-6 table-toolbar-right">
-									<input type="hidden" name="selected_user input-sm" value="USERDUMMY1">
-									<select id="select-user" class="form-control">
-										<option value="USERDUMMY1" <?php if ($selected_user == 'USERDUMMY1') : echo 'selected=""'; endif; ?>>User 1</option>
-										<option value="USERDUMMY2" <?php if ($selected_user == 'USERDUMMY2') : echo 'selected=""'; endif; ?>>User 2</option>
-										<option value="USERDUMMY3" <?php if ($selected_user == 'USERDUMMY3') : echo 'selected=""'; endif; ?>>User 3</option>
-									</select>
-								</div>
-							</div>
-						</div>
-					   <div class="list-group" id="list-notification">
-					   </div>
-				</div>
-			</div>
-		</div>
 	</div>
 </div>
 
@@ -99,47 +54,6 @@
 		})
 
 		var socket = io.connect('http://localhost:3000');
-		socket.on('connect', function(){
-			socket.emit('join', '<?= $selected_user; ?>');
-		});
-
-		// on Load 
-		socket.emit('notification load', {client_id : '<?= $selected_user; ?>'});
-
-		// Terima Notifikasi
-		socket.on('new notification', function(result){
-			var totalNotifikasi = result.totalNotification,
-				listNotifikasi = result.listNotification;
-
-
-			var html = '';	
-				listNotifikasi.forEach(function(data){
-					html += `<a href="javascript:void(0)" class="list-group-item link-notifikasi" data-notification-id="`+data.notification_id+`" data-client-id="`+data.client_id+`" data-link="`+data.link+`">
-					            <h4 class="list-group-item-heading">`+data.title+`</h4>
-					            <p class="list-group-item-text">`+data.message+`</p>
-					        </a>`;
-				})
-			    
-			$('#list-notification').html(html);
-
-			// Baca Notifikasi
-			$('a.link-notifikasi').on('click', function(){
-				var $this = $(this);
-				var link = $this.data('link');
-
-				var data = {
-					notification_id: $this.data('notification-id'),
-					client_id: $this.data('client-id'),
-				}
-
-				socket.emit('notification read', data);
-
-				if(link){
-					window.location = link;
-				}
-				
-			});
-		});
 
 		$('#sendNotification').on('click', function(){
 			var $this = $(this);

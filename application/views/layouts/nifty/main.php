@@ -77,6 +77,68 @@
 		</button>
 		<!--===================================================-->
 	</div>
+	<!-- Socket.io client -->
+	<script type="text/javascript">
+		$(document).ready(function(){
+		var socket = io.connect('http://localhost:3000');
+		socket.on('connect', function(){
+			socket.emit('join', '<?= $selected_user; ?>');
+		});
+
+		socket.emit('notification load', {client_id : '<?= $selected_user; ?>'});
+
+		// Terima Notifikasi
+		socket.on('new notification', function(result){
+			var totalNotifikasi = result.totalNotification,
+				listNotifikasi = result.listNotification;
+
+			if(totalNotifikasi > 0){
+				$('#notification-bell-icon-badge').show();
+				$('#notification-count').text('You have ' + totalNotifikasi + ' notifications.');
+			} else {
+				$('#notification-bell-icon-badge').hide();
+				$('#notification-count').text('You have 0 notifications.');
+			}
+
+			var html = '';	
+				listNotifikasi.forEach(function(data){
+					html += `<li class="bg-gray">
+                                       	<a class="media link-notifikasi" href="javascript:void(0)" data-notification-id="`+data.notification_id+`" data-client-id="`+data.client_id+`" data-link="`+data.link+`">
+                                            <div class="media-left">
+                                                <img class="img-circle img-sm" alt="Profile Picture" src="<?=base_url()?>assets/images/default-user.jpg">
+                                            </div>
+                                            <div class="media-body">
+                                                <div class="text-nowrap">`+data.message+`</div>
+                                                <small class="text-muted">30 minutes ago</small>
+                                            </div>
+                                        </a>
+                                    </li>`;
+				})
+			    
+			$('#notification-list').html(html);
+
+			// Baca Notifikasi
+			$('a.link-notifikasi').on('click', function(){
+				var $this = $(this);
+				var link = $this.data('link');
+
+				var data = {
+					notification_id: $this.data('notification-id'),
+					client_id: $this.data('client-id'),
+				}
+
+				socket.emit('notification read', data);
+
+				if(link){
+					window.location = link;
+				}
+				
+			});
+		});
+		})
+	</script>
+
+
 	<!-- load javascript -->
 	<?=$this->template->buildJs('bottom');?>
 	<!-- end of javascript  -->

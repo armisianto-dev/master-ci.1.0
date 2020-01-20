@@ -12,14 +12,19 @@ class Template
         'bottom' => array(),
     );
 
+    protected $dataparent = array();
+
     public function __construct()
     {
         $this->CI = &get_instance();
     }
 
-    public function set($template)
+    public function set($template, $data = array())
     {
         $this->template = $template;
+        if(isset($data)){
+            $this->dataparent = $data;
+        }
     }
 
     public function load($content, $data = array())
@@ -28,7 +33,7 @@ class Template
             show_error("Unable to load the requested file: view/$content.php");
         }
         $data['content'] = $content;
-        $this->CI->load->view($this->template, $data);
+        $this->CI->load->view($this->template, array_merge($data, $this->dataparent));
     }
 
     public function js($path, $position = 'top')

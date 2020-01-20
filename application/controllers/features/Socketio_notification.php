@@ -8,7 +8,6 @@ class Socketio_notification extends OperatorBase
 {
     public function index()
     {
-        $this->template->js('node_modules/socket.io-client/dist/socket.io.js', 'top');
 
         $userid = $this->input->get_post('userid');
 

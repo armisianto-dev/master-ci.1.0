@@ -31,6 +31,27 @@
 					</a>
 				</li>
 
+				<!--Notification dropdown-->
+                <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                <li class="dropdown" id="notification-wrapper">
+                	<a href="#" data-toggle="dropdown" class="dropdown-toggle" id="notification-bell-icon">
+                        <i class="demo-pli-bell"></i>
+                        <span class="badge badge-header badge-danger" id="notification-bell-icon-badge" style="display: none"></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-md">
+                    	<div class="pad-all bord-btm">
+                            <p class="text-semibold text-main mar-no" id="notification-count"></p>
+                        </div>
+                        <div class="nano scrollable">
+                        	<div class=" nano-content">
+                        		<ul class="head-list" id="notification-list">
+                        		</ul>
+                        	</div>
+                        </div>
+                    </div>
+                </li>
+                <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                <!--End notifications dropdown-->
 			</ul>
 			<ul class="nav navbar-top-links pull-right hidden-xs">
 				<li id="dropdown-user" class="dropdown mar-rgt">

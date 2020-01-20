@@ -8,8 +8,9 @@ class OperatorBase extends CI_Controller
     {
         parent::__construct();
 
+        $data['selected_user'] = 'USERDUMMY1';
         // Set Template
-        $this->template->set('layouts/nifty/main');
+        $this->template->set('layouts/nifty/main', $data);
 
         $this->load_plugins();
     }
@@ -19,6 +20,7 @@ class OperatorBase extends CI_Controller
     {
         // Load JS
         $this->template->js($this->themesFolder . '/plugins/bootstrap-select/bootstrap-select.min.js');
+        $this->template->js('node_modules/socket.io-client/dist/socket.io.js', 'top');
 
         // Load CSS
         $this->template->css($this->themesFolder . '/plugins/bootstrap-select/bootstrap-select.min.css');
