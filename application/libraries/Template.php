@@ -27,6 +27,13 @@ class Template
         }
     }
 
+    public function setData($data = array())
+    {
+        if(isset($data)){
+            $this->dataparent = $data;
+        }
+    }
+
     public function load($content, $data = array())
     {
         if (!is_file(VIEWPATH . $content . '.php')) {

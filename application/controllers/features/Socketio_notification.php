@@ -10,8 +10,8 @@ class Socketio_notification extends OperatorBase
     {
 
         $userid = $this->input->get_post('userid');
-
-        $data['selected_user'] = $userid ? $userid : 'USERDUMMY1';
+        $data['selected_user'] = $userid != '' ? $userid : 'USERDUMMY1';
+        $this->set_selected_user($data['selected_user']);
 
         // Load View
         $this->template->load('features/socketio_notification/index', $data);
@@ -22,8 +22,7 @@ class Socketio_notification extends OperatorBase
     	$title = $this->input->get_post('title');
     	$message = $this->input->get_post('message');
 
-		
-
+	
 		$data['title'] = $title;
 		$data['message'] = $message;
 

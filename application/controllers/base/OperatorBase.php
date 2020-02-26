@@ -1,14 +1,14 @@
 <?php
 class OperatorBase extends CI_Controller
 {
-
     protected $themesFolder = 'assets/themes/nifty';
+    protected $setSelectedUser = 'USERDUMMY1';
 
     public function __construct()
     {
         parent::__construct();
 
-        $data['selected_user'] = 'USERDUMMY1';
+        $data['selected_user'] = $this->setSelectedUser;
         // Set Template
         $this->template->set('layouts/nifty/main', $data);
 
@@ -24,6 +24,13 @@ class OperatorBase extends CI_Controller
 
         // Load CSS
         $this->template->css($this->themesFolder . '/plugins/bootstrap-select/bootstrap-select.min.css');
+    }
+
+    public function set_selected_user($selected_user){
+        $this->setSelectedUser = $selected_user;
+
+        $data['selected_user'] = $this->setSelectedUser;
+        $this->template->setData($data);
     }
 
     public function load_variabels()
